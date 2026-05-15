@@ -1,0 +1,13 @@
+@model Models.Student
+@{
+    string birthDate = Model.BirthDate.Year > 1900 ? Model.BirthDate.ToString("d MMMM yyyy") : "Date inconnue";
+}
+<div class="detailsCard">
+    <details id="student_info_details" open>
+        <summary><i class="fa fa-graduation-cap"></i> @Model.FirstName @Model.LastName</summary>
+        <div class="studentInfoLine"><i class="fa fa-barcode"></i> @Model.Code</div>
+        <div class="studentInfoLine"><i class="fa fa-phone"></i> @Model.Phone</div>
+        <div class="studentInfoLine"><i class="fa fa-paper-plane"></i> @Model.Email</div>
+        <div class="studentInfoLine"><i class="fa fa-cake-candles"></i> @birthDate</div>
+    </details>
+</div>

@@ -1,0 +1,57 @@
+@model Models.Student
+@{
+    ViewBag.Title = "Etudiant - Modification";
+    ViewBag.PageTitle = "Etudiant - Modification";
+    string currentSessionCaption = ViewBag.CurrentSessionCaption != null ? (string)ViewBag.CurrentSessionCaption : "Automne 2026";
+}
+
+<div class="formCard">
+    <form method="post" action="@Url.Action("Edit", "Students")">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Code" value="@Model.Code" />
+
+        <details id="student_edit_info_details" open>
+            <summary>Informations - [@Model.Code]</summary>
+            <div class="form-group">
+                <label for="FirstName">Prenom</label>
+                <input id="FirstName" name="FirstName" type="text" value="@Model.FirstName" />
+            </div>
+
+            <div class="form-group">
+                <label for="LastName">Nom</label>
+                <input id="LastName" name="LastName" type="text" value="@Model.LastName" />
+            </div>
+
+            <div class="form-group">
+                <label for="BirthDate">Date de naissance</label>
+                <input id="BirthDate" name="BirthDate" type="date" value="@(Model.BirthDate.Year > 1900 ? Model.BirthDate.ToString("yyyy-MM-dd") : "")" />
+            </div>
+
+            <div class="form-group">
+                <label for="Email">Courriel</label>
+                <input id="Email" name="Email" type="email" value="@Model.Email" />
+            </div>
+
+            <div class="form-group">
+                <label for="Phone">Telephone</label>
+                <input id="Phone" name="Phone" class="phone" type="text" value="@Model.Phone" />
+            </div>
+
+            <div class="form-group">
+                <label for="AdmissionYear">Annee d'admission</label>
+                <input id="AdmissionYear" name="AdmissionYear" type="number" min="2020" max="2099" value="@Model.AdmissionYear" />
+            </div>
+        </details>
+
+        <details id="student_edit_registrations_details" open>
+            <summary>Inscriptions : Session @currentSessionCaption</summary>
+            @Helper.SelectionLists("selectedCoursesId", (SelectList)ViewBag.Registrations, (SelectList)ViewBag.Courses)
+        </details>
+
+        <button id="submit" type="submit" style="display:none"></button>
+    </form>
+</div>
+
+<div class="sessionFooter">
+    Session courante : <span class="currentSessionCaption">@currentSessionCaption</span>
+</div>

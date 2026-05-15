@@ -1,0 +1,67 @@
+@model IEnumerable<Models.User>
+
+@foreach (var item in Model)
+{
+    if (item.Id != Models.User.ConnectedUser.Id)
+    {
+        string selectViewAccess = "access";
+        string selectWriteAccess = "access";
+        string selectAdminAccess = "access";
+
+        switch (item.Access)
+        {
+            case Models.Access.View: selectViewAccess = "selectedAccess"; break;
+            case Models.Access.Write: selectWriteAccess = "selectedAccess"; break;
+            case Models.Access.Admin: selectAdminAccess = "selectedAccess"; break;
+        }
+
+        string statusIcon = "~/Content/ui-images/OffLine.png";
+        string statusTitle = "Usager hors ligne";
+        if (item.Blocked)
+        {
+            statusIcon = "~/Content/ui-images/Masked.png";
+            statusTitle = "Usager bloque";
+        }
+        else if (item.Online)
+        {
+            statusIcon = "~/Content/ui-images/OnLine.png";
+            statusTitle = "Usager en ligne";
+        }
+
+        string verifiedIcon = item.Verified ? "~/Content/ui-images/Accept.png" : "~/Content/ui-images/Abort.png";
+        string verifiedTitle = item.Verified
+            ? "Compte verifie"
+            : "Compte non verifie, retirer ce status.";
+
+        <div class="UserPanel">
+            <div class="UserIdentity">
+                @Helper.Image(item.Avatar, "UserSmallAvatar")
+                <span title="@item.Email">@item.Name</span>
+            </div>
+
+            <div class="blockCmd userActionIcon access" userId="@item.Id" title="@(item.Blocked ? "Debloquer" : "Bloquer") le compte de l'usager @item.Name">
+                <img src="@Url.Content(statusIcon)" class="userActionImage" title="@statusTitle" alt="etat" />
+            </div>
+
+            <div class="setUserAccessCmd userActionIcon @selectViewAccess" userId="@item.Id" title="Reduire les droits en lecture seule a l'usager @item.Name" access="@((int)Models.Access.View)">
+                <img src="@Url.Content("~/Content/ui-images/user.png")" class="userActionImage" alt="lecture" />
+            </div>
+
+            <div class="setUserAccessCmd userActionIcon @selectWriteAccess" userId="@item.Id" title="Donner les droits en lecture/ecriture a l'usager @item.Name" access="@((int)Models.Access.Write)">
+                <img src="@Url.Content("~/Content/ui-images/power_user.png")" class="userActionImage" alt="ecriture" />
+            </div>
+
+            <div class="setUserAccessCmd userActionIcon @selectAdminAccess" userId="@item.Id" title="Donner les droits administrateur a l'usager @item.Name" access="@((int)Models.Access.Admin)">
+                <img src="@Url.Content("~/Content/ui-images/admin.png")" class="userActionImage" alt="admin" />
+            </div>
+
+            <div class="@(item.Verified ? "" : "forceVerifyCmd") userActionIcon access" userId="@item.Id" title="@verifiedTitle">
+                <img src="@Url.Content(verifiedIcon)" class="userActionImage" alt="verifie" />
+            </div>
+
+            <div class="deleteCmd userActionIcon access" title="Effacer l'usager @item.Name" userId="@item.Id">
+                <i class="fa fa-trash-can"></i>
+            </div>
+        </div>
+    }
+}

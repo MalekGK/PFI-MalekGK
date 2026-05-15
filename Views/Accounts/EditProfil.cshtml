@@ -1,0 +1,189 @@
+@model Models.User
+@{
+    ViewBag.Title = "Profil";
+    ViewBag.PageTitle = "Profil";
+
+    string formError = ViewBag.FormError != null ? (string)ViewBag.FormError : "";
+    string notifyChecked = Model != null && Model.Notify ? "checked" : "";
+    string avatar = Model != null && !string.IsNullOrWhiteSpace(Model.Avatar)
+        ? Model.Avatar
+        : "/App_Assets/Users/no_avatar.png";
+
+    string accessTitle = "Lecture seule";
+    string accessIconClass = "fa-user";
+    if (Model != null)
+    {
+        if (Model.Access == Models.Access.Write)
+        {
+            accessTitle = "Lecture/Ecriture";
+            accessIconClass = "fa-pen";
+        }
+        if (Model.Access == Models.Access.Admin)
+        {
+            accessTitle = "Administrateur";
+            accessIconClass = "fa-crown";
+        }
+    }
+}
+
+<form id="editProfilForm" method="post" action="@Url.Action("EditProfil", "Accounts")">
+    <input id="Id" name="Id" type="hidden" value="@Model.Id" />
+
+    <div class="profil-form">
+        @if (!string.IsNullOrWhiteSpace(formError))
+        {
+            <fieldset>
+                <legend><i class="fa fa-triangle-exclamation" style="color:red; font-size:20px;"></i></legend>
+                <div class="accountLegendMessage" style="color:red;">@formError</div>
+            </fieldset>
+        }
+
+        <fieldset>
+            <legend>Droits d'acces</legend>
+            <div class="profileAccessLine">
+                <i class="fa @accessIconClass" style="color:dodgerblue;"></i>
+                @accessTitle
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Nom</legend>
+            <input name="Name"
+                   id="Name"
+                   class="form-control"
+                   placeholder="Nom"
+                   required
+                   value="@Model.Name" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Courriel</legend>
+            <input name="Email"
+                   id="Email"
+                   class="form-control"
+                   type="email"
+                   placeholder="Courriel"
+                   required
+                   value="@Model.Email" />
+            <input id="ConfirmEmail"
+                   name="ConfirmEmail"
+                   class="form-control"
+                   type="email"
+                   placeholder="Confirmation"
+                   required
+                   value="@Model.Email" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Mot de passe</legend>
+            <div style="display:grid; grid-template-columns:auto 15px; gap:6px;">
+                <label for="changePassword" style="text-align:right;">Modifier</label>
+                <input type="checkbox" name="ChangePassword" id="changePassword" />
+            </div>
+
+            <div class="passwordLayout">
+                <input name="Password"
+                       id="Password"
+                       class="form-control"
+                       type="password"
+                       placeholder="Mot de passe"
+                       disabled />
+                <i id="toggleShowPassword" class="passwordShowIcon fa fa-eye" title="Afficher/Masquer le mot de passe"></i>
+            </div>
+
+            <div class="passwordLayout">
+                <input id="ConfirmPassword"
+                       name="ConfirmPassword"
+                       class="form-control"
+                       type="password"
+                       placeholder="Confirmation"
+                       disabled />
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Notifications</legend>
+            <div class="profilCheckRow">
+                <input type="checkbox" name="NotifyCB" id="NotifyCB" @notifyChecked />
+                <span></span>
+                <label for="NotifyCB">Activees</label>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Avatar</legend>
+            @Helper.ImageUploader("Avatar", avatar, "Cliquez glisser une photo")
+        </fieldset>
+
+        <input id="submit" type="submit" style="display:none" />
+    </div>
+</form>
+
+<div class="event-form" style="margin-top:8px;">
+    <div class="accountActionLinks">
+        <a href="/Accounts/DeleteProfil" onclick="return confirm('Effacer votre compte ?');">Effacer mon compte...</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            let showPassword = false;
+
+            $("#toggleShowPassword").hide();
+
+            $("#changePassword").change(function () {
+                let checked = $(this).is(":checked");
+                $("#Password").prop("disabled", !checked);
+                $("#ConfirmPassword").prop("disabled", !checked);
+
+                if (!checked) {
+                    $("#Password").val("").attr("type", "password");
+                    $("#ConfirmPassword").val("").attr("type", "password");
+                    $("#toggleShowPassword").hide().removeClass("fa-eye-slash").addClass("fa-eye");
+                    showPassword = false;
+                }
+            });
+
+            $("#toggleShowPassword").click(() => {
+                showPassword = !showPassword;
+                if (showPassword) {
+                    $("#Password").attr("type", "text");
+                    $("#ConfirmPassword").attr("type", "text");
+                    $("#toggleShowPassword").removeClass("fa-eye").addClass("fa-eye-slash");
+                } else {
+                    $("#Password").attr("type", "password");
+                    $("#ConfirmPassword").attr("type", "password");
+                    $("#toggleShowPassword").removeClass("fa-eye-slash").addClass("fa-eye");
+                }
+            });
+
+            $("#Password").on("input", () => {
+                if (!$("#changePassword").is(":checked") || $("#Password").val() === "")
+                    $("#toggleShowPassword").hide();
+                else
+                    $("#toggleShowPassword").show();
+            });
+
+            $("#editProfilForm").on("submit", function (e) {
+                let email = ($("#Email").val() || "").trim();
+                let confirmEmail = ($("#ConfirmEmail").val() || "").trim();
+                if (email !== confirmEmail) {
+                    alert("Les courriels ne correspondent pas.");
+                    e.preventDefault();
+                    return;
+                }
+
+                if ($("#changePassword").is(":checked")) {
+                    let password = $("#Password").val() || "";
+                    let confirmPassword = $("#ConfirmPassword").val() || "";
+                    if (password !== confirmPassword) {
+                        alert("Les mots de passe ne correspondent pas.");
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            });
+        });
+    </script>
+}

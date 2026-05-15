@@ -1,0 +1,82 @@
+@model Models.LoginCredential
+@{
+    ViewBag.Title = "Connexion";
+    ViewBag.PageTitle = "PFI";
+
+    string eventMessage = ViewBag.LoginMessage != null ? (string)ViewBag.LoginMessage : "";
+    bool eventSuccess = ViewBag.LoginSuccess != null ? (bool)ViewBag.LoginSuccess : true;
+    string messageColor = eventSuccess ? "green" : "red";
+    string alertIcon = eventSuccess ? "fa-circle-info" : "fa-triangle-exclamation";
+
+    string email = Model != null ? (Model.Email ?? "") : "";
+}
+
+<br />
+<div class="event-form">
+    @if (!string.IsNullOrWhiteSpace(eventMessage))
+    {
+        <fieldset>
+            <legend><i class="fa-solid @alertIcon" style="color:@messageColor; font-size:20px;"></i></legend>
+            <div class="accountLegendMessage">
+                <span style="color:@messageColor">@eventMessage</span>
+            </div>
+        </fieldset>
+    }
+
+    <form id="loginForm" method="post" action="@Url.Action("Login", "Accounts")">
+        <fieldset>
+            <legend>Connexion</legend>
+
+            <input name="Email"
+                   id="Email"
+                   class="form-control"
+                   type="email"
+                   placeholder="Courriel"
+                   required
+                   value="@email" />
+
+            <div class="passwordLayout">
+                <input name="Password"
+                       id="Password"
+                       class="form-control"
+                       type="password"
+                       placeholder="Mot de passe"
+                       required />
+                <i id="toggleShowPassword" class="passwordShowIcon fa fa-eye" title="Afficher/Masquer le mot de passe"></i>
+            </div>
+
+            <input id="TimeZoneOffset" name="TimeZoneOffset" type="hidden" value="0" />
+            <input id="submit" type="submit" value="Se connecter..." class="btn btn-primary" />
+        </fieldset>
+    </form>
+
+    <div class="accountActionLinks">
+        <a href="/Accounts/Subscribe">S'enregistrer...</a>
+        <a href="/Accounts/RenewPasswordCommand">Mot de passe oublie...</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            $("#TimeZoneOffset").val(new Date().getTimezoneOffset() / 60);
+
+            if ($("#Password").val() === "")
+                $("#toggleShowPassword").hide();
+
+            $("#toggleShowPassword").click(() => {
+                let currentType = $("#Password").attr("type");
+                $("#Password").attr("type", currentType === "password" ? "text" : "password");
+                $("#toggleShowPassword").toggleClass("fa-eye");
+                $("#toggleShowPassword").toggleClass("fa-eye-slash");
+            });
+
+            $("#Password").on("input", () => {
+                if ($("#Password").val() === "")
+                    $("#toggleShowPassword").hide();
+                else
+                    $("#toggleShowPassword").show();
+            });
+        });
+    </script>
+}

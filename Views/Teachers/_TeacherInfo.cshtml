@@ -1,0 +1,12 @@
+@model Models.Teacher
+<div class="detailsCard">
+    <details id="teacher_info_details" open>
+        <summary><i class="fa fa-chalkboard-user"></i> @Model.FirstName @Model.LastName</summary>
+        <div class="studentInfoLine"><i class="fa fa-barcode"></i> <span class="teacherCode clickCode">@Model.Code</span></div>
+        <div class="studentInfoLine"><i class="fa fa-phone"></i> @Model.Phone</div>
+        <div class="studentInfoLine"><i class="fa fa-paper-plane"></i> @Model.ContactEmail</div>
+        <div class="studentInfoLine">Embauche le @Model.StartDate.ToString("d MMMM yyyy")</div>
+        <div class="studentInfoLine">@Model.SeniorityYears.ToString("0.0") ans d'anciennete</div>
+        <div class="teacherInfoAvatar" style="background-image:url('@Model.Avatar');"></div>
+    </details>
+</div>

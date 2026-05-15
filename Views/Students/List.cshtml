@@ -1,0 +1,91 @@
+@{
+    ViewBag.Title = "Etudiants";
+    ViewBag.PageTitle = "Etudiants";
+    bool searchOn = ViewBag.SearchOn != null ? (bool)ViewBag.SearchOn : false;
+    string keywords = ViewBag.Keywords != null ? (string)ViewBag.Keywords : "";
+    int yearFilter = ViewBag.YearFilter != null ? (int)ViewBag.YearFilter : 0;
+    var years = ViewBag.Years as List<int>;
+}
+
+@if (searchOn)
+{
+    <div class="searchBarPanel">
+        <input id="StudentsKeywords" type="text" placeholder="Recherche" value="@keywords" />
+        <select id="StudentsYearFilter">
+            <option value="0">Toutes les annees</option>
+            @if (years != null)
+            {
+                foreach (int y in years)
+                {
+                    <option value="@y" @(yearFilter == y ? "selected" : "")>@y</option>
+                }
+            }
+        </select>
+    </div>
+}
+
+@RenderPage("~/Views/Shared/_CurrentSessionEditor.cshtml")
+
+<div id="StudentsListContainer"><!-- Periodicaly refreshed --></div>
+
+@section Scripts {
+    <script>
+        let studentsListPanel = null;
+        let studentsKeyword = "@keywords";
+        let studentsSearchTimer = null;
+
+        $(() => {
+            studentsListPanel = new AutoRefreshedPanel("StudentsListContainer", "@Url.Action("GetStudents")", 5, studentsListPostRefresh);
+
+            $("#StudentsKeywords").on("input", function () {
+                clearTimeout(studentsSearchTimer);
+                studentsSearchTimer = setTimeout(studentsApplySearch, 250);
+            });
+
+            $("#StudentsYearFilter").on("change", studentsApplySearch);
+        });
+
+        function studentsApplySearch() {
+            studentsKeyword = $("#StudentsKeywords").val() || "";
+            $.post("@Url.Action("SetSearch")", {
+                keywords: studentsKeyword,
+                year: parseInt($("#StudentsYearFilter").val() || 0)
+            }, () => {
+                studentsListPanel.refresh(true);
+            });
+        }
+
+        function studentsListPostRefresh() {
+            RestoreDetailsState();
+            SummaryHandling();
+            studentsHighlight();
+        }
+
+        function studentsHighlight() {
+            if (studentsKeyword.trim().length > 0) {
+                $("#StudentsListContainer .studentToHighlight").each(function () {
+                    highlight(studentsKeyword.toLocaleLowerCase(), this);
+                });
+            }
+        }
+
+        function toggleCurrentSessionEditor(forceShow = null) {
+            if (forceShow == null)
+                $("#CurrentSessionEditor").slideToggle(150);
+            else if (forceShow)
+                $("#CurrentSessionEditor").slideDown(150);
+            else
+                $("#CurrentSessionEditor").slideUp(150);
+        }
+
+        function saveCurrentSession() {
+            let year = parseInt($("#CurrentSessionYear").val() || 0);
+            let season = $("input[name='CurrentSessionSeason']:checked").val();
+            $.post("@Url.Action("SetCurrentSession")", { year, season }, (caption) => {
+                $(".currentSessionCaption").text(caption);
+                toggleCurrentSessionEditor(false);
+                studentsListPanel.refresh(true);
+            });
+        }
+    </script>
+}

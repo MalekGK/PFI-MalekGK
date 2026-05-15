@@ -1,0 +1,44 @@
+@model Models.Teacher
+@{
+    ViewBag.Title = "Prof - Ajout";
+    ViewBag.PageTitle = "Prof - Ajout";
+    string avatar = string.IsNullOrWhiteSpace(Model.Avatar) ? "/App_Assets/teachers/no_avatar.png" : Model.Avatar;
+}
+
+<div class="formCard">
+    <form method="post" action="@Url.Action("Create", "Teachers")">
+        <input type="hidden" name="Email" value="@Model.Email" />
+
+        <details id="teacher_create_info_details" open>
+            <summary>Informations - [Nouveau]</summary>
+            <div class="form-group">
+                <label for="FirstName">Prenom</label>
+                <input id="FirstName" name="FirstName" type="text" value="@Model.FirstName" />
+            </div>
+
+            <div class="form-group">
+                <label for="LastName">Nom</label>
+                <input id="LastName" name="LastName" type="text" value="@Model.LastName" />
+            </div>
+
+            <div class="form-group">
+                <label for="StartDate">Date d'embauche</label>
+                <input id="StartDate" name="StartDate" type="date" value="@(Model.StartDate.Year > 1900 ? Model.StartDate.ToString("yyyy-MM-dd") : "")" />
+            </div>
+
+            <div class="form-group">
+                <label for="Phone">Telephone</label>
+                <input id="Phone" name="Phone" class="phoneExt" type="text" value="@Model.Phone" />
+            </div>
+
+            <div class="form-group">
+                <label for="Avatar">Avatar</label>
+                <div class="teacherAvatarUploader">
+                    @Helper.ImageUploader("Avatar", avatar, "Cliquez glisser une photo")
+                </div>
+            </div>
+        </details>
+
+        <button id="submit" type="submit" style="display:none"></button>
+    </form>
+</div>

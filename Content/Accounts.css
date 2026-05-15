@@ -1,0 +1,278 @@
+.event-form {
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+}
+
+.profil-form {
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+}
+
+.event-form input,
+.profil-form input {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.event-form fieldset,
+.profil-form fieldset {
+    border: 1px solid #ddd !important;
+    border-radius: 6px !important;
+    padding: 6px !important;
+    padding-top: 16px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #f6f6f6;
+}
+
+.event-form legend,
+.profil-form legend {
+    font-size: 1em;
+    font-weight: 700;
+    color: #666;
+    float: none;
+    width: inherit;
+    padding: 0 6px;
+    margin-left: 6px;
+    margin-bottom: -12px;
+    transform: translate(0, -1px);
+    text-align: left;
+}
+
+.accountLegendMessage {
+    text-align: left !important;
+    padding-left: 2px;
+}
+
+.accountActionLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-top: 2px;
+    padding-left: 2px;
+}
+
+.accountActionLinks a {
+    text-decoration: none;
+}
+
+.passwordLayout {
+    display: grid;
+    grid-template-columns: auto 0px;
+}
+
+.passwordShowIcon {
+    transform: translate(-32px, 12px) !important;
+    cursor: pointer;
+    color: #aaa;
+    font-size: 1.1em;
+}
+
+.profilCheckRow {
+    text-align: left;
+    display: grid;
+    grid-template-columns: 15px 10px auto;
+    align-items: center;
+}
+
+.profilCheckRow label {
+    margin-left: 4px;
+    color: #444;
+    font-weight: 600;
+}
+
+.profileAccessLine {
+    text-align: left;
+    font-weight: 700;
+    padding-left: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profileAccessBadge {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #bfc5cc;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.userItem {
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
+}
+
+.UserPanel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 6px 8px;
+    padding: 2px 4px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    font-size: 14px;
+}
+
+.UserIdentity {
+    display: grid;
+    grid-template-columns: 40px auto;
+    align-items: center;
+    gap: 8px;
+    width: 260px;
+    cursor: default;
+}
+
+.UserIdentity span {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 33px;
+    font-weight: 500;
+    color: #1b1b1b;
+}
+
+.UserIdentity span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userActionIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5f6977;
+    cursor: pointer;
+}
+
+.userActionImage {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.userActionIcon i {
+    font-size: 42px;
+    color: inherit;
+}
+
+.userActionIcon:hover {
+    color: dodgerblue;
+}
+
+.forceVerifyCmd i {
+    color: #ba2a2a;
+}
+
+.UserHeaderAvatar {
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    margin-right: 3px;
+    margin-left: 3px;
+    border-radius: 25px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.UserXSmallAvatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 25px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.UserSmallAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 35px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.UserMediumAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.access {
+    width: 46px;
+    height: 46px;
+    padding: 3px;
+}
+
+.selectedAccess {
+    width: 46px;
+    height: 46px;
+    border: 1px solid dodgerblue;
+    padding: 3px;
+    border-radius: 46px;
+    background-color: rgba(30, 144, 255, 0.2);
+}
+
+.popup {
+    z-index: 99999;
+    width: 280px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    display: none;
+}
+
+.popupContent {
+    border: 1px solid #c6ccd5;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: #f9fbff;
+    color: #1f2b3a;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: auto 24px;
+    column-gap: 8px;
+    align-items: center;
+}
+
+.popupHearder {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #1f63d9;
+}
+
+.close-btn {
+    cursor: pointer;
+    color: #808aa0;
+    font-size: 20px;
+    justify-self: end;
+}
+
+@media (max-width: 460px) {
+    .event-form,
+    .profil-form {
+        max-width: 100%;
+    }
+}

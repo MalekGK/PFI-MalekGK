@@ -1,0 +1,36 @@
+@model List<Models.Student>
+@{
+    string sessionCaption = ViewBag.SessionCaption != null ? (string)ViewBag.SessionCaption : "Automne 2026";
+    var yearsList = Model.Select(s => s.CohortYear).Distinct().OrderByDescending(y => y).ToList();
+}
+<div class="listBoxPanel">
+    @if (Model.Count == 0)
+    {
+        <div class="emptyZone">Aucun etudiant</div>
+    }
+    else
+    {
+        foreach (int year in yearsList)
+        {
+            var students = Model.Where(s => s.CohortYear == year).OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+            if (students.Count > 0)
+            {
+                <details id="student_details_@year" open>
+                    <summary>Cohorte @year</summary>
+                    @foreach (var item in students)
+                    {
+                        <div class="StudentListLayout panelLine">
+                            <a href="@Url.Action("Details", new { id = item.Id })">
+                                <span class="studentCode clickCode">@item.Code</span>
+                                <span class="studentToHighlight">@item.LastName @item.FirstName</span>
+                            </a>
+                        </div>
+                    }
+                </details>
+            }
+        }
+    }
+</div>
+<div class="sessionFooter clickable" onclick="toggleCurrentSessionEditor(true)">
+    Session courante : <span class="currentSessionCaption">@sessionCaption</span>
+</div>

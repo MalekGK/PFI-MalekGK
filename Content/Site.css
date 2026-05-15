@@ -1,0 +1,493 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #ececec;
+    color: #1c1c1c;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+.appMainContainer {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.section,
+.roundedBorder {
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    background: #f7f7f7;
+    margin-bottom: 8px;
+}
+
+.headerMenu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 4px 10px;
+}
+
+.siteIcon {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    display: block;
+    background-image: url('/App_Assets/teachers/pageLogo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.tabsHeader {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+}
+
+.tabLink {
+    text-decoration: none;
+    color: #cdcdcd;
+    font-size: 18px;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.selectedTab {
+    color: #1a2a41;
+    font-weight: 700;
+}
+
+.menu {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cmdIcon {
+    text-decoration: none;
+    color: dodgerblue;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.pageTitle {
+    flex: 1;
+    color: #1a2a41;
+    font-size: 26px;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.item-layout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.item-layout a {
+    color: #2a2a2a;
+    text-decoration: none;
+}
+
+.menuIcon {
+    color: dodgerblue;
+}
+
+.searchBarPanel {
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    background: #f7f7f7;
+    padding: 8px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 8px;
+}
+
+.searchBarPanel input,
+.searchBarPanel select {
+    border: 1px solid #cfd3d8;
+    border-radius: 6px;
+    height: 42px;
+    font-size: 16px;
+    padding: 2px 10px;
+    background: #fff;
+}
+
+.listBoxPanel {
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    background: #f7f7f7;
+    padding: 6px;
+}
+
+.emptyZone {
+    padding: 20px;
+    color: #666;
+    font-size: 16px;
+}
+
+details {
+    border-radius: 8px;
+    margin-bottom: 6px;
+}
+
+summary {
+    background: #c6c6c8;
+    border-radius: 8px;
+    border: 1px solid #f6f6f6;
+    color: #1f2b3a;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    min-height: 44px;
+    line-height: 40px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+summary::marker {
+    font-size: 18px;
+}
+
+.panelLine {
+    font-family: "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.3;
+    padding-left: 14px;
+    padding-right: 6px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.panelLine a {
+    text-decoration: none;
+    color: #111;
+}
+
+.clickCode {
+    color: dodgerblue !important;
+}
+
+.sessionFooter {
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    background: #f7f7f7;
+    margin-top: 8px;
+    padding: 4px 10px;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.sessionFooter.clickable {
+    cursor: pointer;
+}
+
+.detailsCard {
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    background: #f7f7f7;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.detailsTitle {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 2px 8px;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: #f7f7f7;
+}
+
+.detailsTitle .titleText {
+    flex: 1;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #1a2a41;
+}
+
+.detailsTitle .titleCmds {
+    display: flex;
+    gap: 10px;
+}
+
+.titleCmds a,
+.titleCmds i {
+    color: dodgerblue;
+    font-size: 22px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.formCard {
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    background: #f7f7f7;
+    padding: 8px;
+}
+
+.form-group {
+    margin-bottom: 8px;
+}
+
+.form-group label {
+    display: block;
+    color: #66717d;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #d0d5db;
+    border-radius: 8px;
+    background: #f5f5f5;
+    font-size: 16px;
+    padding: 6px 10px;
+}
+
+.highlight {
+    background-color: #fff200;
+}
+
+#CurrentSessionEditor {
+    display: none;
+}
+
+.sessionHint {
+    color: #3682da;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+#updatingView {
+    position: fixed;
+    right: 14px;
+    bottom: 14px;
+    z-index: 9999;
+    display: none;
+}
+
+.updatingSpinner {
+    width: 26px;
+    height: 26px;
+    border: 4px solid #e8e8e8;
+    border-top-color: #6f6f6f;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.accountCard {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.accountMessage {
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.accountMessageOk {
+    background: #e6f5ea;
+    border: 1px solid #b6dfc0;
+    color: #1f6d2f;
+}
+
+.accountMessageError {
+    background: #fbeaea;
+    border: 1px solid #f0c7c7;
+    color: #9d1f1f;
+}
+
+.accountPasswordRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+}
+
+.accountPrimary {
+    margin-top: 8px;
+    border: 0;
+    border-radius: 8px;
+    background: #1f63d9;
+    color: #fff;
+    padding: 8px 14px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.accountLinksRow {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.accountLinksRow a {
+    text-decoration: none;
+}
+
+.accountCheckboxRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.accountAvatarPreview {
+    width: 110px;
+    height: 110px;
+    border-radius: 10px;
+    border: 1px solid #c8c8c8;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 8px;
+}
+
+.accountAccessBanner {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    background: #eceff3;
+    color: #1f2b3a;
+    padding: 8px 10px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.usersGrid {
+    display: grid;
+    gap: 8px;
+}
+
+.usersRow {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) 110px 150px auto;
+    gap: 10px;
+    align-items: center;
+    padding: 8px;
+}
+
+.usersIdentity {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 8px;
+    align-items: center;
+}
+
+.usersAvatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #c8c8c8;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.usersName {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a2432;
+}
+
+.usersEmail,
+.usersAccess,
+.usersState {
+    font-size: 14px;
+}
+
+.usersStatusOnline {
+    color: #1d8d3c;
+    font-weight: 700;
+}
+
+.usersStatusOffline {
+    color: #6f6f6f;
+}
+
+.usersStatusBlocked {
+    color: #b32626;
+    font-weight: 700;
+}
+
+.usersActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.usersActionIcon {
+    color: #1f63d9;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+@media (max-width: 900px) {
+    .tabLink {
+        font-size: 16px;
+    }
+
+    .pageTitle {
+        font-size: 20px;
+    }
+
+    .cmdIcon {
+        font-size: 18px;
+    }
+
+    .searchBarPanel {
+        grid-template-columns: 1fr;
+    }
+
+    .searchBarPanel input,
+    .searchBarPanel select,
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
+    summary,
+    .sessionFooter,
+    .panelLine,
+    .form-group label {
+        font-size: 16px;
+    }
+
+    summary {
+        min-height: 40px;
+        line-height: 36px;
+    }
+
+    .usersRow {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .usersActions {
+        justify-content: flex-start;
+    }
+}

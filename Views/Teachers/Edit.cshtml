@@ -1,0 +1,56 @@
+@model Models.Teacher
+@{
+    ViewBag.Title = "Prof - Modification";
+    ViewBag.PageTitle = "Prof - Modification";
+    string currentSessionCaption = ViewBag.CurrentSessionCaption != null ? (string)ViewBag.CurrentSessionCaption : "Automne 2026";
+    string avatar = string.IsNullOrWhiteSpace(Model.Avatar) ? "/App_Assets/teachers/no_avatar.png" : Model.Avatar;
+}
+
+<div class="formCard">
+    <form method="post" action="@Url.Action("Edit", "Teachers")">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Code" value="@Model.Code" />
+        <input type="hidden" name="Email" value="@Model.Email" />
+
+        <details id="teacher_edit_info_details" open>
+            <summary>Informations - [@Model.Code]</summary>
+            <div class="form-group">
+                <label for="FirstName">Prenom</label>
+                <input id="FirstName" name="FirstName" type="text" value="@Model.FirstName" />
+            </div>
+
+            <div class="form-group">
+                <label for="LastName">Nom</label>
+                <input id="LastName" name="LastName" type="text" value="@Model.LastName" />
+            </div>
+
+            <div class="form-group">
+                <label for="StartDate">Date d'embauche</label>
+                <input id="StartDate" name="StartDate" type="date" value="@(Model.StartDate.Year > 1900 ? Model.StartDate.ToString("yyyy-MM-dd") : "")" />
+            </div>
+
+            <div class="form-group">
+                <label for="Phone">Telephone</label>
+                <input id="Phone" name="Phone" class="phoneExt" type="text" value="@Model.Phone" />
+            </div>
+
+            <div class="form-group">
+                <label for="Avatar">Avatar</label>
+                <div class="teacherAvatarUploader">
+                    @Helper.ImageUploader("Avatar", avatar, "Cliquez glisser une photo")
+                </div>
+            </div>
+        </details>
+
+        <details id="teacher_edit_allocations_details" open>
+            <summary>Allocation : Session @currentSessionCaption</summary>
+            @Helper.SelectionLists("selectedCoursesId", (SelectList)ViewBag.Allocations, (SelectList)ViewBag.Courses)
+        </details>
+
+        <button id="submit" type="submit" style="display:none"></button>
+    </form>
+</div>
+
+<div class="sessionFooter">
+    Session courante : <span class="currentSessionCaption">@currentSessionCaption</span>
+</div>

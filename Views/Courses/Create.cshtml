@@ -1,0 +1,29 @@
+@model Models.Course
+@{
+    ViewBag.Title = "Cours - Ajout";
+    ViewBag.PageTitle = "Cours - Ajout";
+}
+
+<div class="formCard">
+    <form method="post" action="@Url.Action("Create", "Courses")">
+        <details id="course_create_info_details" open>
+            <summary>Informations - [Nouveau]</summary>
+            <div class="form-group">
+                <label for="Session">Session</label>
+                <input id="Session" name="Session" type="number" min="1" max="6" value="@Model.Session" />
+            </div>
+
+            <div class="form-group">
+                <label for="Code">Sigle</label>
+                <input id="Code" name="Code" type="text" value="@Model.Code" />
+            </div>
+
+            <div class="form-group">
+                <label for="Title">Titre</label>
+                <input id="Title" name="Title" type="text" value="@Model.Title" />
+            </div>
+        </details>
+
+        <button id="submit" type="submit" style="display:none"></button>
+    </form>
+</div>

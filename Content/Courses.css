@@ -1,0 +1,42 @@
+﻿.CoursesListLayout {
+    min-height: 34px;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+    padding-left: 6px;
+    border-radius: 6px;
+    font-family: 'Times New Roman';
+
+}
+
+    .CoursesListLayout a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .CoursesListLayout:hover {
+        background-color: azure;
+    }
+
+    .CoursesListLayout .icon {
+        display: none !important;
+    }
+
+    .CoursesListLayout:hover .icon {
+        display: block !important;
+    }
+
+.courseCode {
+    font-family: Consolas;
+    color: dodgerblue;
+}
+
+.courseMainTitle {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    font-weight: 600;
+}
+
+.courseSubTitle {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    font-weight: 500;
+}

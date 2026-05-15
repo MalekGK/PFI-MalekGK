@@ -1,0 +1,34 @@
+@model Models.Teacher
+@{
+    var yearsList = Model.Allocations.Select(a => a.Year).Distinct().OrderByDescending(y => y).ToList();
+}
+<div class="detailsCard">
+    <div class="registrationsTitle">Allocations</div>
+    @if (Model.Allocations.Count == 0)
+    {
+        <div class="emptyZone">Aucune allocation</div>
+    }
+    else
+    {
+        foreach (int year in yearsList)
+        {
+            var allocations = Model.Allocations.Where(a => a.Year == year).ToList();
+            if (allocations.Count > 0)
+            {
+                <details id="teacher_allocations_details_@year" open>
+                    <summary>@year</summary>
+                    @foreach (var allocation in allocations)
+                    {
+                        <div class="panelLine">
+                            <a href="@Url.Action("Details", "Courses", new { id = allocation.CourseId })">
+                                <span style="color:#8391a0;">[@allocation.Course.Session]</span>
+                                <span class="clickCode">@allocation.Course.Code</span>
+                                @allocation.Course.Title
+                            </a>
+                        </div>
+                    }
+                </details>
+            }
+        }
+    }
+</div>

@@ -1,0 +1,41 @@
+@model Models.Course
+@{
+    ViewBag.Title = "Cours - Modification";
+    ViewBag.PageTitle = "Cours - Modification";
+    string currentSessionCaption = ViewBag.CurrentSessionCaption != null ? (string)ViewBag.CurrentSessionCaption : "Automne 2026";
+}
+
+<div class="formCard">
+    <form method="post" action="@Url.Action("Edit", "Courses")">
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <details id="course_edit_info_details" open>
+            <summary>Informations - [@Model.Code]</summary>
+            <div class="form-group">
+                <label for="Session">Session</label>
+                <input id="Session" name="Session" type="number" min="1" max="6" value="@Model.Session" />
+            </div>
+
+            <div class="form-group">
+                <label for="Code">Sigle</label>
+                <input id="Code" name="Code" type="text" value="@Model.Code" />
+            </div>
+
+            <div class="form-group">
+                <label for="Title">Titre</label>
+                <input id="Title" name="Title" type="text" value="@Model.Title" />
+            </div>
+        </details>
+
+        <details id="course_edit_registrations_details" open>
+            <summary>Inscriptions : Session @currentSessionCaption</summary>
+            @Helper.SelectionLists("selectedStudentsId", (SelectList)ViewBag.Registrations, (SelectList)ViewBag.Students)
+        </details>
+
+        <button id="submit" type="submit" style="display:none"></button>
+    </form>
+</div>
+
+<div class="sessionFooter">
+    Session courante : <span class="currentSessionCaption">@currentSessionCaption</span>
+</div>

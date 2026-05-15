@@ -1,0 +1,26 @@
+﻿
+@{ ViewBag.Title = "Edit"; }
+<hr />
+<h2>Sélection de couleurs</h2>
+<hr />
+
+<form method="post" action="@Url.Action("Edit", "ColorsSelection")">
+    @Helper.SelectionLists("ColorChoicesId", (SelectList)ViewBag.ColorChoices, (SelectList)ViewBag.Colors)
+
+    <br />
+    <div style="display:flex; justify-content:center">
+        <input type="submit" value="Soumettre" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(() => {
+            $("option").each(function (index, option) {
+                let hex = option.text.split(" ")[0];
+                $(this).attr("style", `color:${getContrast(hex)}; background-color:${hex}`);
+            })
+        })
+        
+    </script>
+}

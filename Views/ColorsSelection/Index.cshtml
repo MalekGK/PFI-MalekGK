@@ -1,0 +1,47 @@
+﻿@model List<SelectionDemo.Models.Color>
+@{
+    ViewBag.Title = "Index";
+}
+<hr />
+<h2>Choix de couleurs <a href="/ColorsSelection/Edit" style="text-decoration:none" class="fa fa-pen-to-square"></a></h2>
+
+<hr />
+<div style="display:flex; gap:6px; flex-flow:wrap">
+    @if (Model.Count > 0)
+    {
+        foreach (var color in Model)
+        {
+            <div class="colorSample" color="@color.Hex"> <!-- style dynamically injected -->
+                @color.Name <br />
+                <span style="font-family: Consolas; text-transform: uppercase;"; >@color.Hex</span>
+            </div>
+        }
+    }
+    else
+    {
+        <h4>Aucun choix</h4>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            $(".colorSample").each(function (index, elem) {
+                // extract color code from color custom attribute
+                let hex = $(this).attr("color").split(" ")[0];
+                // inject style to sample
+                $(this).attr("style",
+                   `border-radius: 6px;
+                    text-align: center;
+                    padding: 14px;
+                    font-weight: bold;
+                    color: ${getContrast(hex)}; 
+                    background-color: ${hex}; 
+                    width: 180px;
+                    height: 80px`
+                );
+            })
+        })
+    </script>
+}
+

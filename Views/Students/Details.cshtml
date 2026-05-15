@@ -1,0 +1,50 @@
+@model Models.Student
+@{
+    ViewBag.Title = "Etudiant - Details";
+    ViewBag.PageTitle = "Etudiant - Details";
+    string sessionCaption = ViewBag.SessionCaption != null ? (string)ViewBag.SessionCaption : "Automne 2026";
+    bool userCanWrite = Models.User.ConnectedUser != null && Models.User.ConnectedUser.CanWrite;
+}
+
+<div class="detailsTitle">
+    <a class="siteIcon" href="#"></a>
+    <div class="titleText">Etudiant - Details</div>
+    <div class="titleCmds">
+        @if (userCanWrite)
+        {
+            <a href="@Url.Action("Edit", new { id = Model.Id })" title="Modifier"><i class="fa fa-pen-to-square"></i></a>
+            <i class="fa fa-trash-can" title="Effacer" onclick="deleteStudent();"></i>
+        }
+        <a href="@Url.Action("List")" title="Retour"><i class="fa fa-square-xmark"></i></a>
+    </div>
+</div>
+
+<div id="StudentInfoContainer"><!-- auto refreshed --></div>
+<div id="StudentRegistrationsContainer"><!-- auto refreshed --></div>
+
+<div class="sessionFooter">
+    Session courante : <span class="currentSessionCaption">@sessionCaption</span>
+</div>
+
+@section Scripts {
+    <script>
+        let studentInfoPanel = null;
+        let studentRegistrationsPanel = null;
+
+        $(() => {
+            studentInfoPanel = new AutoRefreshedPanel("StudentInfoContainer", "@Url.Action("GetStudentInfo", new { id = Model.Id })", 5, studentDetailsPostRefresh);
+            studentRegistrationsPanel = new AutoRefreshedPanel("StudentRegistrationsContainer", "@Url.Action("GetStudentRegistrations", new { id = Model.Id })", 5, studentDetailsPostRefresh);
+        });
+
+        function studentDetailsPostRefresh() {
+            RestoreDetailsState();
+            SummaryHandling();
+        }
+
+        function deleteStudent() {
+            if (confirm("Effacer ?")) {
+                window.location = "@Url.Action("Delete", new { id = Model.Id })";
+            }
+        }
+    </script>
+}

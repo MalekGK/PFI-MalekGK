@@ -1,0 +1,30 @@
+@{
+    int currentYear = ViewBag.SessionYear != null ? (int)ViewBag.SessionYear : DateTime.Now.Year;
+    string season = ViewBag.SessionSeason != null ? (string)ViewBag.SessionSeason : "Automne";
+}
+<div id="CurrentSessionEditor" class="section roundedBorder formCard">
+    <div class="headerMenu">
+        <a class="siteIcon" href="#"></a>
+        <div class="pageTitle" style="font-size:40px;">Session courante</div>
+        <div class="menu">
+            <i class="cmdIcon fa fa-circle-check" title="Valider" onclick="saveCurrentSession();"></i>
+            <i class="cmdIcon fa fa-square-xmark" title="Annuler" onclick="toggleCurrentSessionEditor(false);"></i>
+        </div>
+    </div>
+    <div class="sessionHint">Choisissez l'annee et la session pour les prochaines allocations de cours :</div>
+    <div class="form-group">
+        <label>Annee</label>
+        <input id="CurrentSessionYear" type="number" min="2020" max="2099" value="@currentYear" />
+    </div>
+    <fieldset>
+        <legend>Session</legend>
+        <div>
+            <input type="radio" id="sessionAutomne" name="CurrentSessionSeason" value="Automne" @(season == "Automne" ? "checked" : "") />
+            <label for="sessionAutomne">Automne</label>
+        </div>
+        <div>
+            <input type="radio" id="sessionHiver" name="CurrentSessionSeason" value="Hiver" @(season == "Hiver" ? "checked" : "") />
+            <label for="sessionHiver">Hiver</label>
+        </div>
+    </fieldset>
+</div>

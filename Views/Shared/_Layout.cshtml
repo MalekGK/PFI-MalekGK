@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Selection Demo</title>
+
+    <!------------------------------------------- CSS --------------------------------------------------->
+    <!-- Ressources from CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <!-- Local ressources -->
+    <link href="/Content/Selections.css" rel="stylesheet" />
+    <link href="/Content/Site.css" rel="stylesheet" />
+    <link href="/Content/Accounts.css" rel="stylesheet" />
+    <link href="/Content/image-control.css" rel="stylesheet" />
+    <link href="/Content/Students.css" rel="stylesheet" />
+    <link href="/Content/Courses.css" rel="stylesheet" />
+    <link href="/Content/Teachers.css" rel="stylesheet" />
+    <!--------------------------------------------------------------------------------------------------->
+
+</head>
+<body>
+    @RenderPage("~/Views/Shared/_header.cshtml")
+    <div class="body-content appMainContainer">
+        @RenderBody()
+    </div>
+    <div id="updatingView" title="Rafraichissement de la vue">
+        <div class="updatingSpinner"></div>
+    </div>
+
+    <!--------------------------------------- Scripts --------------------------------------------------->
+    <!-- Ressources from CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.4/bootbox.min.js"></script>
+
+    <!-- Local ressources -->
+    <script src="/Scripts/SiteScripts.js"></script>
+    <script src="/Scripts/image-control.js"></script>
+    <script src="/Scripts/selections.js"></script>
+    <script src="/Scripts/autoRefreshPanel.js"></script>
+
+    @RenderSection("Scripts", required: false)
+    <script>
+
+        // Choose White or Black text color in order to have best constrast over a given background hexcolor
+        // From Google search
+        function getContrast(hexcolor) {
+            // Remove leading # if present
+            hexcolor = hexcolor.replace("#", "");
+
+            // Convert 3-digit hex to 6-digit (e.g., #f00 -> #ff0000)
+            if (hexcolor.length === 3) {
+                hexcolor = hexcolor.split('').map(c => c + c).join('');
+            }
+
+            // Convert to RGB
+            const r = parseInt(hexcolor.substring(0, 2), 16);
+            const g = parseInt(hexcolor.substring(2, 4), 16);
+            const b = parseInt(hexcolor.substring(4, 6), 16);
+
+            // Apply YIQ formula (Weights based on human perception)
+            const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+
+            // If luminance is light (>= 128), return black; else return white
+            return (yiq >= 128) ? 'black' : 'white';
+        }
+    </script>
+    <!-------------------------------------------------------------------------------------------------->
+</body>
+</html>

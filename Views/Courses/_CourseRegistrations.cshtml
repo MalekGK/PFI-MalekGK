@@ -1,0 +1,40 @@
+@model Models.Course
+@{
+    var yearsList = Model.Registrations.Select(r => r.Year).Distinct().OrderByDescending(y => y).ToList();
+}
+<div class="detailsCard">
+    <div class="registrationsTitle">Etudiants inscrits</div>
+    @if (Model.Registrations.Count == 0)
+    {
+        <div class="emptyZone">Aucune inscription</div>
+    }
+    else
+    {
+        foreach (int year in yearsList)
+        {
+            var registrations = Model.Registrations.Where(r => r.Year == year).OrderBy(r => r.Student.Code).ToList();
+            var assignedTeacher = Model.TeacherByYear(year);
+            if (registrations.Count > 0)
+            {
+                <details id="course_registrations_details_@year" open>
+                    <summary>
+                        Cohorte @year
+                        @if (assignedTeacher != null)
+                        {
+                            <span> - <a class="TeacherLink" href="@Url.Action("Details", "Teachers", new { id = assignedTeacher.Id })">@assignedTeacher.LastName @assignedTeacher.FirstName</a></span>
+                        }
+                    </summary>
+                    @foreach (var registration in registrations)
+                    {
+                        <div class="panelLine">
+                            <a href="@Url.Action("Details", "Students", new { id = registration.StudentId })">
+                                <span class="clickCode">@registration.Student.Code</span>
+                                @registration.Student.LastName @registration.Student.FirstName
+                            </a>
+                        </div>
+                    }
+                </details>
+            }
+        }
+    }
+</div>

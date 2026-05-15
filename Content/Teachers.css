@@ -1,0 +1,79 @@
+﻿.TeacherListLayout {
+    min-height: 56px;
+    border-radius: 6px;
+    margin: 1px 0;
+    padding: 4px 8px;
+}
+
+.TeacherListLayout a {
+    display: grid;
+    grid-template-columns: 56px auto;
+    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    color: #111;
+}
+
+.TeacherListLayout:hover {
+    background-color: #edf5ff;
+}
+
+.teacherCaptionLine {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    font-size: 18px;
+}
+
+.teacherName {
+    color: #121212;
+}
+
+.teacherCode {
+    color: dodgerblue;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 16px;
+}
+
+.TeacherLink {
+    text-decoration: none;
+    color: dodgerblue;
+}
+
+.teacherAvatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid #c8c8c8;
+}
+
+.teacherInfoAvatar {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid #c8c8c8;
+    margin-top: 8px;
+}
+
+.teacherAvatarUploader {
+    max-width: 390px;
+}
+
+.teacherBigAvatar {
+    width: 100%;
+    max-width: 390px;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid #c8c8c8;
+}
