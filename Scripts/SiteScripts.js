@@ -1,7 +1,38 @@
-﻿$(document).ready(function () {
-    $('.phone').mask('(999) 999-9999');
-    $('.phoneExt').mask('(999) 999-9999 poste 99999');
-    $('.zipcode').mask('a9a 9a9');
+﻿const PHONE_INPUT_SELECTOR = "input.phone, input.phoneExt, input[type='tel'], input[name*='Phone'], input[name*='phone'], input[id*='Phone'], input[id*='phone'], input[name*='Telephone'], input[name*='telephone'], input[id*='Telephone'], input[id*='telephone'], input[name*='Tel'], input[name*='tel'], input[id*='Tel'], input[id*='tel']";
+const PHONE_MASK_PATTERN = "(000)-000-0000";
+
+function FormatPhoneMask(rawValue) {
+    const digits = (rawValue || "").replace(/\D/g, "").substring(0, 10);
+    if (digits.length === 0)
+        return "";
+    if (digits.length <= 3)
+        return "(" + digits;
+    if (digits.length <= 6)
+        return "(" + digits.substring(0, 3) + ")-" + digits.substring(3);
+    return "(" + digits.substring(0, 3) + ")-" + digits.substring(3, 6) + "-" + digits.substring(6, 10);
+}
+
+function InstallPhoneMask() {
+    $(document).off("input.phoneMask blur.phoneMask", PHONE_INPUT_SELECTOR);
+
+    $(PHONE_INPUT_SELECTOR).each(function () {
+        $(this).attr("maxlength", "14");
+        if (!$(this).attr("placeholder"))
+            $(this).attr("placeholder", PHONE_MASK_PATTERN);
+        $(this).val(FormatPhoneMask($(this).val()));
+    });
+
+    $(document).on("input.phoneMask blur.phoneMask", PHONE_INPUT_SELECTOR, function () {
+        $(this).val(FormatPhoneMask($(this).val()));
+    });
+}
+
+$(document).ready(function () {
+    InstallPhoneMask();
+
+    if (typeof $.fn.mask === "function")
+        $('.zipcode').mask('a9a 9a9');
+
     $(".datepicker").datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
