@@ -38,6 +38,12 @@ namespace SelectionDemo.Controllers
             return RedirectToAction("Login");
         }
 
+        public ActionResult About()
+        {
+            ViewBag.PageTitle = "À propos";
+            return View("~/Views/About.cshtml");
+        }
+
         public ActionResult Login(string message = "", bool success = true)
         {
             if (global::Models.User.ConnectedUser != null)

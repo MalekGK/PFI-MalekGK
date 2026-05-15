@@ -1,0 +1,40 @@
+﻿.StudentListLayout {
+    min-height: 40px;
+    border-radius: 6px;
+    padding: 0 6px;
+    margin: 1px 0;
+}
+
+.StudentListLayout a {
+    text-decoration: none;
+    color: #1a1a1a;
+    display: inline-block;
+    width: 100%;
+}
+
+.StudentListLayout:hover {
+    background-color: #edf5ff;
+}
+
+.studentCode {
+    color: dodgerblue;
+}
+
+.studentInfoLine {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.24;
+    color: #1a2432;
+    margin-bottom: 2px;
+}
+
+.registrationsTitle {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a2a41;
+    margin: 8px 0;
+    border-top: 1px solid #ccc;
+    padding-top: 8px;
+}

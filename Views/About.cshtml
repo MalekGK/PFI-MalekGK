@@ -1,0 +1,46 @@
+﻿@{ ViewBag.PageTitle = "À propos de "; }
+<div style="display:flex; align-items:center">
+    <img src="~/WebApp.png" style="width:70px" />
+    <h1>PFI</h1>
+
+</div>
+<dl>
+    <br />
+    <dd style="text-align:justify">
+        Application Web transactionnelle multi-usagers offrant une interface CRUD aux usagers authentifiés pour gérer une liste d'étudiants, d'enseignants et de cours du Collège Lionel-Groulx dans des fichiers locaux au serveur en format JSON.
+        <br /> <br />
+        Ce site est à titre de démonstration dans le cadre pédagogique du cours 420-KBD-LG - Développment d'applications Web II. Il n'est nullement relié à une activité commerciale.
+
+        Les vidéos partagés par les étudiants du cours seront modérés par le Webmestre. Tout contenu en conflit avec l'éthique collégiale sera effacé.
+        <br />
+        <br />
+    </dd>
+
+    <dt>
+        <br />
+        Auteur
+    </dt>
+
+    <dd>
+        Malek-Gabriel Khaterchi <br />
+        202275145 <br />
+        Étudiant <br />
+        Technique de l'informatique <br />
+        Collège Lionel-Groulx <br />
+        <a href="202275145@edu.clg.qc.ca">202275145@edu.clg.qc.ca</a>
+    </dd>
+
+    <dt>
+        <br />
+        Date de publication
+    </dt>
+    <dd>
+        12 mai 2026
+    </dd>
+
+    <dt>
+        <br />
+        Nombres d'usagers en ligne : @Models.User.GetOnlineUsers().Count()
+    </dt>
+    
+</dl>
