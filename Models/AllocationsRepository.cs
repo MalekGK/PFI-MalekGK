@@ -33,7 +33,6 @@ namespace Models
          if (data == null)
             return 0;
 
-         // A teacher/course/year triplet must be unique and a course/year can only be owned by one teacher.
          if (HasSameTeacherCourseYear(data) || HasOtherTeacherForCourseYear(data))
             return 0;
 

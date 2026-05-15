@@ -309,8 +309,12 @@
     <Content Include="App_Data\Users.json" />
     <None Include="packages.config" />
     <Content Include="Views\Accounts\EditProfil.cshtml" />
+    <Content Include="Views\Accounts\EventsJournal.cshtml" />
+    <Content Include="Views\Accounts\GetEventsList.cshtml" />
+    <Content Include="Views\Accounts\GetLoginsList.cshtml" />
     <Content Include="Views\Accounts\GetUsers.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
+    <Content Include="Views\Accounts\LoginsJournal.cshtml" />
     <Content Include="Views\Accounts\ManageUsers.cshtml" />
     <Content Include="Views\Accounts\RenewPassword.cshtml" />
     <Content Include="Views\Accounts\RenewPasswordCommand.cshtml" />

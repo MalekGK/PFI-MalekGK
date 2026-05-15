@@ -5,6 +5,7 @@
     bool userConnected = Models.User.ConnectedUser != null;
     bool userIsAdmin = userConnected ? Models.User.ConnectedUser.IsAdmin : false;
     bool userCanWrite = userConnected ? Models.User.ConnectedUser.CanWrite : false;
+    string defaultAction = SelectionDemo.RouteConfig.DefaultAction();
 
     bool showTabs = (controller == "students" || controller == "courses" || controller == "teachers") && action == "list";
     bool hideSimpleHeader = (controller == "students" || controller == "courses" || controller == "teachers") && action == "details";
@@ -34,15 +35,17 @@
                         <i class="cmdIcon fa fa-bars" title="Menu"></i>
                     </div>
                     <div class="dropdown-menu dropdown-menu-end noselect">
-                        <div class="dropdown-item item-layout"><i class="cmdIcon fa fa-square-xmark"></i><a href="/Accounts/About">About</a></div>
-                        <div class="dropdown-divider"></div>
                         <div class="dropdown-item item-layout"><i class="menuIcon fa fa-address-card"></i><a href="/Accounts/EditProfil">Profil...</a></div>
                         <div class="dropdown-item item-layout"><i class="menuIcon fa fa-sign-out"></i><a href="/Accounts/Logout">Deconnexion...</a></div>
                         @if (userIsAdmin)
                         {
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-item item-layout"><i class="menuIcon fa fa-users"></i><a href="/Accounts/ManageUsers">Gestion des usagers...</a></div>
+                            <div class="dropdown-item item-layout"><i class="menuIcon fa fa-calendar-days"></i><a href="/Accounts/LoginsJournal">Historique de connexions...</a></div>
+                            <div class="dropdown-item item-layout"><i class="menuIcon fa fa-gear"></i><a href="/Accounts/EventsJournal">Journal d'activites...</a></div>
                         }
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item item-layout"><i class="menuIcon fa fa-info-circle"></i><a href="/Accounts/About">A propos...</a></div>
                     </div>
                 </div>
             </div>
@@ -72,6 +75,14 @@ else if (!hideSimpleHeader)
                     <div id="mainMenuPanel" class="menu">
                         <i class="cmdIcon submitCmd fa fa-circle-check" title="Enregistrer"></i>
                         <a class="cmdIcon fa fa-square-xmark" title="Annuler" href="javascript:history.back()"></a>
+                    </div>
+                    break;
+                case "manageusers":
+                case "loginsjournal":
+                case "eventsjournal":
+                case "about":
+                    <div id="mainMenuPanel" class="menu">
+                        <a class="cmdIcon fa fa-square-xmark" title="Retour" href="@defaultAction"></a>
                     </div>
                     break;
             }

@@ -270,6 +270,296 @@
     justify-self: end;
 }
 
+.journalPage {
+    width: 100%;
+    max-width: 1080px;
+    margin: 8px auto;
+    padding: 0 4px;
+}
+
+.journalDayLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 34px;
+    gap: 8px;
+    align-items: start;
+    margin-bottom: 8px;
+}
+
+.journalDayLayout details[open] > summary {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.journalLayout,
+.journalEventLayout {
+    display: grid;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    border-bottom: 1px solid #e5e7ea;
+}
+
+.journalLayout {
+    grid-template-columns: minmax(0, 260px) 58px 14px minmax(0, 120px) minmax(0, 1fr);
+}
+
+.journalEventLayout {
+    grid-template-columns: minmax(0, 260px) 58px minmax(0, 180px) minmax(0, 1fr);
+}
+
+.journalUserCell {
+    min-width: 0;
+}
+
+.journalUserCell .userItem {
+    gap: 8px;
+}
+
+.journalUserCell .ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.journalTimeCell {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #465667;
+}
+
+.journalSeparator {
+    font-weight: 700;
+    color: #6f7782;
+}
+
+.journalActionCell {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    color: #2f435e;
+    font-weight: 700;
+}
+
+.journalActionName {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    color: #2f435e;
+    font-weight: 700;
+}
+
+.journalComment {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #404a57;
+}
+
+.journalLocationCell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #596779;
+    font-size: 14px;
+}
+
+.journalMuted {
+    color: #8a94a2;
+    font-style: italic;
+}
+
+.journalTag {
+    display: inline-block;
+    border: 1px solid #aacfff;
+    border-radius: 999px;
+    background: #eef6ff;
+    color: #1f63d9;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.6;
+    padding: 0 8px;
+}
+
+.journalDeleteDay {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    border: 1px solid #dadde2;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #b33a3a;
+    text-decoration: none;
+}
+
+.journalDeleteDay:hover {
+    border-color: #b33a3a;
+    background: #fff0f0;
+    color: #9b2020;
+}
+
+.aboutPage {
+    width: 100%;
+    max-width: 1080px;
+    margin: 8px auto;
+    padding: 0 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.aboutHero {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+    padding: 12px;
+}
+
+.aboutLogo {
+    width: 78px;
+    height: 78px;
+    object-fit: contain;
+}
+
+.aboutHeroText h1 {
+    margin: 0;
+    color: #1a2a41;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.aboutHeroText p {
+    margin: 4px 0 0 0;
+    color: #3f4d5e;
+    line-height: 1.35;
+}
+
+.aboutBadge {
+    min-width: 130px;
+    border: 1px solid #bfd4ef;
+    border-radius: 8px;
+    background: #edf5ff;
+    text-align: center;
+    padding: 8px 10px;
+}
+
+.aboutBadgeLabel {
+    display: block;
+    color: #4a5f79;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.aboutBadgeValue {
+    display: block;
+    color: #1f63d9;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.aboutSplit {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.aboutCard {
+    padding: 12px;
+}
+
+.aboutCard h2 {
+    margin: 0 0 10px 0;
+    color: #1f3858;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.aboutCard p {
+    margin: 0 0 8px 0;
+    color: #2c2c2c;
+    line-height: 1.4;
+    text-align: justify;
+}
+
+.aboutMeta {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 165px minmax(0, 1fr);
+    row-gap: 6px;
+    column-gap: 8px;
+}
+
+.aboutMeta dt {
+    margin: 0;
+    color: #4b596a;
+    font-weight: 700;
+}
+
+.aboutMeta dd {
+    margin: 0;
+    color: #1d2b3c;
+}
+
+.aboutMeta a {
+    color: dodgerblue;
+    text-decoration: none;
+}
+
+.aboutMeta a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .journalLayout {
+        grid-template-columns: minmax(0, 230px) 54px 14px minmax(0, 110px) minmax(0, 1fr);
+    }
+
+    .journalEventLayout {
+        grid-template-columns: minmax(0, 230px) 54px minmax(0, 140px) minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .journalDayLayout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .journalDeleteDay {
+        justify-self: end;
+        margin-top: 0;
+    }
+
+    .journalLayout {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 3px;
+    }
+
+    .journalEventLayout {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 3px;
+    }
+
+    .aboutHero {
+        grid-template-columns: minmax(0, 1fr);
+        text-align: center;
+        justify-items: center;
+    }
+
+    .aboutSplit {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .aboutMeta {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 2px;
+    }
+}
+
 @media (max-width: 460px) {
     .event-form,
     .profil-form {

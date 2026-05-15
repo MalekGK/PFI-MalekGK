@@ -1,0 +1,70 @@
+@using System.Collections.Generic
+@using System.Linq
+@model IEnumerable<Models.Event>
+@{
+    List<Models.Event> eventsList = Model != null
+        ? Model.OrderByDescending(e => e.CreationDate).ToList()
+        : new List<Models.Event>();
+
+    int timeZoneOffset = Session["TimeZoneOffset"] is int offset ? offset : 0;
+    bool firstDay = true;
+}
+
+<div class="listBoxPanel">
+    @if (eventsList.Count == 0)
+    {
+        <div class="emptyZone">Aucune activite enregistree.</div>
+    }
+    else
+    {
+        foreach (var dayGroup in eventsList
+            .GroupBy(e => e.CreationDate.AddHours(timeZoneOffset).Date)
+            .OrderByDescending(g => g.Key))
+        {
+            string dayToken = dayGroup.Key.ToString("yyyyMMdd");
+            string dayLabel = dayGroup.Key.ToString("yyyy-MM-dd");
+
+            <div class="journalDayLayout">
+                <details id="events_details_@dayToken" @(firstDay ? "open" : "")>
+                    <summary>@dayLabel</summary>
+                    @foreach (var evt in dayGroup.OrderByDescending(e => e.CreationDate))
+                    {
+                        DateTime shiftedEventDate = evt.CreationDate.AddHours(timeZoneOffset);
+                        string comment = (evt.Comment ?? "").Trim();
+                        if (comment.Length > 90)
+                            comment = comment.Substring(0, 90) + "...";
+
+                        <div class="journalEventLayout panelLine">
+                            <div class="journalUserCell">
+                                @if (evt.User != null)
+                                {
+                                    @Helper.AvatarUser(evt.User, "UserSmallAvatar")
+                                }
+                                else
+                                {
+                                    <div class="userItem">
+                                        <img src="@Url.Content("~/Content/ui-images/na.png")" class="UserXSmallAvatar" alt="Usager efface" />
+                                        <span class="journalMuted">Usager efface</span>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="journalTimeCell">@shiftedEventDate.ToString("HH:mm")</div>
+                            <div class="journalActionName">@evt.Action</div>
+                            <div class="journalComment">@comment</div>
+                        </div>
+                    }
+                </details>
+
+                <a class="journalDeleteDay deleteEventsDayCmd"
+                   href="@Url.Action("DeleteEventsDay", "Accounts", new { day = dayLabel })"
+                   data-confirm="Effacer le journal d'activites du @dayLabel?"
+                   title="Effacer la journee du @dayLabel">
+                    <i class="fa fa-xmark"></i>
+                </a>
+            </div>
+
+            firstDay = false;
+        }
+    }
+</div>

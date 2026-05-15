@@ -1,0 +1,106 @@
+@using System.Collections.Generic
+@using System.Linq
+@model IEnumerable<Models.Login>
+@{
+    List<Models.Login> logins = Model != null
+        ? Model.OrderByDescending(l => l.LoginDate).ToList()
+        : new List<Models.Login>();
+
+    List<int> loggedUsersId = ViewBag.LoggedUsersId as List<int> ?? new List<int>();
+    int timeZoneOffset = Session["TimeZoneOffset"] is int offset ? offset : 0;
+    bool firstDay = true;
+}
+
+<div class="listBoxPanel">
+    @if (logins.Count == 0)
+    {
+        <div class="emptyZone">Aucune connexion enregistree.</div>
+    }
+    else
+    {
+        foreach (var dayGroup in logins
+            .GroupBy(l => l.LoginDate.AddHours(timeZoneOffset).Date)
+            .OrderByDescending(g => g.Key))
+        {
+            string dayToken = dayGroup.Key.ToString("yyyyMMdd");
+            string dayLabel = dayGroup.Key.ToString("yyyy-MM-dd");
+
+            <div class="journalDayLayout">
+                <details id="logins_details_@dayToken" @(firstDay ? "open" : "")>
+                    <summary>@dayLabel</summary>
+                    @foreach (var login in dayGroup.OrderByDescending(l => l.LoginDate))
+                    {
+                        DateTime shiftedLoginDate = login.LoginDate.AddHours(timeZoneOffset);
+                        DateTime shiftedLogoutDate = login.LogoutDate.AddHours(timeZoneOffset);
+                        bool hasLogout = shiftedLogoutDate > shiftedLoginDate;
+                        bool userIsOnline = !hasLogout && login.User != null && loggedUsersId.Contains(login.User.Id);
+                        string location = "";
+
+                        if (!string.IsNullOrWhiteSpace(login.IpAddress) && login.IpAddress != "::1")
+                        {
+                            var parts = new List<string> { login.IpAddress };
+                            if (!string.IsNullOrWhiteSpace(login.City)) parts.Add(login.City);
+                            if (!string.IsNullOrWhiteSpace(login.RegionName)) parts.Add(login.RegionName);
+                            if (!string.IsNullOrWhiteSpace(login.CountryCode)) parts.Add(login.CountryCode.ToUpper());
+                            location = string.Join(", ", parts);
+                        }
+
+                        <div class="journalLayout panelLine">
+                            <div class="journalUserCell">
+                                @if (login.User != null)
+                                {
+                                    @Helper.AvatarUser(login.User, "UserSmallAvatar")
+                                }
+                                else
+                                {
+                                    <div class="userItem">
+                                        <img src="@Url.Content("~/Content/ui-images/na.png")" class="UserXSmallAvatar" alt="Usager efface" />
+                                        <span class="journalMuted">Usager efface</span>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="journalTimeCell">@shiftedLoginDate.ToString("HH:mm")</div>
+                            <div class="journalSeparator">-</div>
+
+                            <div class="journalActionCell">
+                                @if (hasLogout)
+                                {
+                                    @shiftedLogoutDate.ToString("HH:mm")
+                                }
+                                else if (userIsOnline)
+                                {
+                                    <span class="journalTag">En ligne</span>
+                                }
+                                else
+                                {
+                                    <span class="journalMuted">Session terminee</span>
+                                }
+                            </div>
+
+                            <div class="journalLocationCell">
+                                @if (string.IsNullOrWhiteSpace(location))
+                                {
+                                    @:&nbsp;
+                                }
+                                else
+                                {
+                                    @location
+                                }
+                            </div>
+                        </div>
+                    }
+                </details>
+
+                <a class="journalDeleteDay deleteLoginsDayCmd"
+                   href="@Url.Action("DeleteLoginsDay", "Accounts", new { day = dayLabel })"
+                   data-confirm="Effacer l'historique de connexions du @dayLabel?"
+                   title="Effacer la journee du @dayLabel">
+                    <i class="fa fa-xmark"></i>
+                </a>
+            </div>
+
+            firstDay = false;
+        }
+    }
+</div>

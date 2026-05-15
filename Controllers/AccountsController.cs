@@ -2,6 +2,7 @@ using DAL;
 using EmailHandling;
 using Models;
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -402,6 +403,75 @@ namespace SelectionDemo.Controllers
         }
 
         [UserAccess(Access.Admin)]
+        public ActionResult LoginsJournal()
+        {
+            ViewBag.PageTitle = "Historique des connexions";
+            return View();
+        }
+
+        [UserAccess(Access.Admin)]
+        public ActionResult GetLoginsList(bool forceRefresh = false)
+        {
+            if (DB.Logins.HasChanged || DB.Users.HasChanged || forceRefresh)
+            {
+                List<int> loggedUsersId = DB.Users.ToList()
+                    .Where(u => u.Online)
+                    .Select(u => u.Id)
+                    .ToList();
+
+                ViewBag.LoggedUsersId = loggedUsersId;
+
+                List<Login> logins = DB.Logins.ToList()
+                    .OrderByDescending(l => l.LoginDate)
+                    .ToList();
+
+                return PartialView("GetLoginsList", logins);
+            }
+
+            return Content("");
+        }
+
+        [UserAccess(Access.Admin)]
+        public ActionResult DeleteLoginsDay(string day)
+        {
+            if (TryParseJournalDay(day, out DateTime date))
+                DB.Logins.DeleteLoginsJournalDay(date);
+
+            return RedirectToAction("LoginsJournal");
+        }
+
+        [UserAccess(Access.Admin)]
+        public ActionResult EventsJournal()
+        {
+            ViewBag.PageTitle = "Journal d'activites";
+            return View();
+        }
+
+        [UserAccess(Access.Admin)]
+        public ActionResult GetEventsList(bool forceRefresh = false)
+        {
+            if (DB.Events.HasChanged || DB.Users.HasChanged || forceRefresh)
+            {
+                List<Event> eventsList = DB.Events.ToList()
+                    .OrderByDescending(e => e.CreationDate)
+                    .ToList();
+
+                return PartialView("GetEventsList", eventsList);
+            }
+
+            return Content("");
+        }
+
+        [UserAccess(Access.Admin)]
+        public ActionResult DeleteEventsDay(string day)
+        {
+            if (TryParseJournalDay(day, out DateTime date))
+                DB.Events.DeleteEventsJournalDay(date);
+
+            return RedirectToAction("EventsJournal");
+        }
+
+        [UserAccess(Access.Admin)]
         public ActionResult GetUsers(bool forceRefresh = false)
         {
             if (DB.Users.HasChanged || DB.Logins.HasChanged || forceRefresh)
@@ -545,6 +615,24 @@ namespace SelectionDemo.Controllers
             string encodedMessage = HttpUtility.UrlEncode(message ?? "");
             string encodedSuccess = success ? "true" : "false";
             return Redirect("/Accounts/Login?message=" + encodedMessage + "&success=" + encodedSuccess);
+        }
+
+        private bool TryParseJournalDay(string day, out DateTime date)
+        {
+            string rawDay = (day ?? "").Trim();
+
+            if (DateTime.TryParseExact(
+                rawDay,
+                new[] { "yyyy-MM-dd", "yyyy/M/d", "M/d/yyyy", "MM/dd/yyyy" },
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.AllowWhiteSpaces,
+                out date))
+                return true;
+
+            if (DateTime.TryParse(rawDay, CultureInfo.CurrentCulture, DateTimeStyles.AllowWhiteSpaces, out date))
+                return true;
+
+            return DateTime.TryParse(rawDay, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out date);
         }
     }
 }

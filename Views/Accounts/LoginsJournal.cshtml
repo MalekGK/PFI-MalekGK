@@ -1,0 +1,25 @@
+@{
+    ViewBag.Title = "Historique des connexions";
+    ViewBag.PageTitle = "Historique des connexions";
+}
+
+<div class="journalPage">
+    <div id="LoginsListContainer"><!-- Auto refreshed --></div>
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            new AutoRefreshedPanel("LoginsListContainer", "@Url.Action("GetLoginsList", "Accounts")", 5, () => {
+                SummaryHandling();
+                RestoreDetailsState();
+            });
+
+            $(document).on("click", ".deleteLoginsDayCmd", function (e) {
+                const message = $(this).attr("data-confirm") || "Effacer la journee?";
+                if (!confirm(message))
+                    e.preventDefault();
+            });
+        });
+    </script>
+}

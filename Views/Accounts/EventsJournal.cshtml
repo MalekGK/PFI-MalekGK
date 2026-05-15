@@ -1,0 +1,25 @@
+@{
+    ViewBag.Title = "Journal d'activites";
+    ViewBag.PageTitle = "Journal d'activites";
+}
+
+<div class="journalPage">
+    <div id="EventsListContainer"><!-- Auto refreshed --></div>
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            new AutoRefreshedPanel("EventsListContainer", "@Url.Action("GetEventsList", "Accounts")", 5, () => {
+                SummaryHandling();
+                RestoreDetailsState();
+            });
+
+            $(document).on("click", ".deleteEventsDayCmd", function (e) {
+                const message = $(this).attr("data-confirm") || "Effacer la journee?";
+                if (!confirm(message))
+                    e.preventDefault();
+            });
+        });
+    </script>
+}
